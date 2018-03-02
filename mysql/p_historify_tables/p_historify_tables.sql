@@ -13,23 +13,23 @@ BEGIN
   -- ONLY IF PARAMS ARE FULLFILLED
     IF source_table is not null and end_table is not null then
       -- PREPARE CREATE TABLE IF NOT EXISTS STATEMENT
-        SET @create_sql=CONCAT_WS(' ','CREATE TABLE IF NOT EXISTS',end_table,'AS SELECT * FROM',source_table,'WHERE 1=2;');
-      PREPARE stmt FROM @create_sql ;
+        SET create_sql=CONCAT_WS(' ','CREATE TABLE IF NOT EXISTS',end_table,'AS SELECT * FROM',source_table,'WHERE 1=2;');
+      PREPARE stmt FROM create_sql ;
       -- EXECUTE STATEMENT
         EXECUTE stmt;
         DEALLOCATE PREPARE stmt;
 
         -- PREPARE DELETE DESTINY TABLE
-        SET @delete_sql=CONCAT_WS(' ','DELETE FROM',end_table,'WHERE date_format(fecha_insercion,''%Y%m%d'')<(SELECT date_format(DATE_ADD(max(fecha_insercion),INTERVAL',number_days_h,'DAY),''%Y%m%d'') as fecha_insercion from',source_table,'as source);');
-        PREPARE stmt FROM @delete_sql ;
+        SET delete_sql=CONCAT_WS(' ','DELETE FROM',end_table,'WHERE date_format(fecha_insercion,''%Y%m%d'')<(SELECT date_format(DATE_ADD(max(fecha_insercion),INTERVAL',number_days_h,'DAY),''%Y%m%d'') as fecha_insercion from',source_table,'as source);');
+        PREPARE stmt FROM delete_sql ;
       -- EXECUTE STATEMENT
         EXECUTE stmt;
         DEALLOCATE PREPARE stmt;
 
       -- PREPARE INSERT INTO @destiny_table TABLE STATEMENT
-        SET @insert_sql=CONCAT_WS(' ','INSERT INTO',end_table,'SELECT * FROM',source_table,' as source where date_format(source.fecha_insercion,''%Y%m%d'') not in (SELECT (date_format(fecha_insercion,''%Y%m%d'')) as fecha_insercion from',end_table,');');
+        SET insert_sql=CONCAT_WS(' ','INSERT INTO',end_table,'SELECT * FROM',source_table,' as source where date_format(source.fecha_insercion,''%Y%m%d'') not in (SELECT (date_format(fecha_insercion,''%Y%m%d'')) as fecha_insercion from',end_table,');');
       -- EXECUTE STATEMENT
-        PREPARE stmt FROM @insert_sql;
+        PREPARE stmt FROM insert_sql;
         EXECUTE stmt;
         DEALLOCATE PREPARE stmt;
 
