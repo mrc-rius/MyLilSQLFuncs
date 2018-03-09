@@ -1,0 +1,6 @@
+bcp DISTRIBUIDORAS.dbo.Masiva_Union_Fenosa_temp out bcp_fenosa_temp.dat -c -Sgifeprod -USu
+bcp DISTRIBUIDORAS.dbo.Masiva_Union_Fenosa_temp format nul -c -f formato_masiva_fenosa_temp.fmt -Sgifeprod -USu
+
+
+
+bcp DISTRIBUIDORAS.dbo.Masiva_Union_Fenosa_temp_test_bcp in bcp_fenosa_temp.dat -c -Sgifenodo1 -UPentaho -PmwqbQbpq
