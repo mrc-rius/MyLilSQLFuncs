@@ -1,0 +1,23 @@
+-- 1 copy table format to fmt
+	bcp DB.schema.TABLE format nul  -n -t -f file_name.fmt -Sserver -Uuser -Ppassword
+
+-- // one of the two options
+	-- 2.1 Create data considerinf fmt file
+		bcp DB.schema.TABLE out file_name.dat -f file_name.fmt -Sserver -Uuser -Ppassword
+	-- 2.1 copy data to bk without fmt file
+		bcp DB.schema.TABLE out file_name.dat -n -Sserver -Uuser -Ppassword
+
+
+-- RESTORE DATA:table must exists before, the fmt file does not create it
+
+	bcp DB.schema.TABLE in file_name.dat -f file_name.fmt -Sserver -Uuser -Ppassword
+
+
+
+-- BCP out 29M rows in minutes. Less than 10 minutes
+-- BCP in 29M rows in 20 minutes
+
+
+
+
+
