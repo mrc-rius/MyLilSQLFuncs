@@ -21,3 +21,4 @@
 
 
 
+bcp "exec [DISTRIBUIDORAS].[dbo].[p_sips_consumos_fenosa_split] @ApplyID = 907" queryout "W:\Dades SQL\consumos_fenosa.dat" -n -Sgifenodo1 -Upentaho -PmwqbQbpq
